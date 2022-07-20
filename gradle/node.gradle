@@ -1,0 +1,24 @@
+node {
+    download = true
+    version = '16.14.0'
+    npmVersion = '8.6.0'
+    workDir = file("$projectDir/.gradle/nodejs")
+    npmWorkDir = file("$projectDir/.gradle/npm")
+    nodeProjectDir = file("$projectDir/frontend")
+}
+
+task deleteVueBuildFiles(type: Delete) {
+    delete "src/main/resources/static"
+}
+
+task npmBuild(type: NpmTask, dependsOn: ['deleteVueBuildFiles', 'npmInstall']) {
+    args = ["run", "build"]
+}
+
+processResources.dependsOn 'npmBuild'
+
+idea {
+    module {
+        excludeDirs += files("$projectDir/frontend/node_modules")
+    }
+}

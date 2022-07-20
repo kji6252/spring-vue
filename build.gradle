@@ -2,11 +2,15 @@ plugins {
     id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.github.node-gradle.node' version '3.4.0'
+    id 'idea'
 }
 
 group = 'io.github.kji6252'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+apply from: "gradle/node.gradle"
 
 configurations {
     compileOnly {
@@ -25,7 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
+    implementation 'com.h2database:h2'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
