@@ -2,11 +2,10 @@ package io.github.kji6252.springvue.controller;
 
 import io.github.kji6252.springvue.controller.vm.UserInfoVM;
 import io.github.kji6252.springvue.mapper.UserMapper;
-import io.github.kji6252.springvue.service.UserServiceImpl;
+import io.github.kji6252.springvue.service.UserService;
 import io.github.kji6252.springvue.service.dto.UserAndPasswordDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
@@ -18,8 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 public class AccountController {
 
-    private final UserDetailsManager userDetailsManager;
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping("/account")
     public UserInfoVM getAccount(HttpServletRequest request) {
@@ -28,7 +26,7 @@ public class AccountController {
         }
 
         return UserMapper.INSTANCE
-                .userToVM(userDetailsManager.loadUserByUsername(request.getRemoteUser()));
+                .userToVM(userService.loadUserByUsername(request.getRemoteUser()));
     }
 
     @PostMapping("/register")
