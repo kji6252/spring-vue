@@ -1,7 +1,7 @@
 node {
     download = true
-    version = '16.14.0'
-    npmVersion = '8.6.0'
+    version = '16.16.0'
+    npmVersion = '8.11.0'
     workDir = file("$projectDir/.gradle/nodejs")
     npmWorkDir = file("$projectDir/.gradle/npm")
     nodeProjectDir = file("$projectDir/frontend")

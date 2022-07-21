@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export default {
-  name: "Logout",
+  name: "LogoutView",
   created() {
     axios.post("/api/logout").then(() => {
       this.$store.commit("accountStore/logout");

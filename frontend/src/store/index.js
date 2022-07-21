@@ -5,7 +5,9 @@ import { accountStore } from "./account-store";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {
-    accountStore,
-  },
+  state: {},
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: { accountStore },
 });

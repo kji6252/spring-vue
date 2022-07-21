@@ -54,7 +54,7 @@ import { maxLength, minLength, required, sameAs } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from "axios";
 export default {
-  name: "Register",
+  name: "RegisterView",
   methods: {
     doRegister() {
       const data = {
