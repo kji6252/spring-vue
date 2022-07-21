@@ -1,5 +1,5 @@
 {
-  "name": "frontend2",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.7.0",
+    "@vuelidate/core": "*",
+    "@vuelidate/validators": "*",
     "axios": "^0.27.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",

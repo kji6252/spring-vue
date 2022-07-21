@@ -1,5 +1,5 @@
 <template>
-  <form action="/api/authentication" method="post" @submit.prevent="doLogin()">
+  <form @submit.prevent="doLogin()">
     <label for="username">ID:</label>
     <input
       type="text"
@@ -12,6 +12,7 @@
     <label for="password">PW:</label>
     <input type="password" id="password" name="password" v-model="password" />
     <input type="submit" value="Login" />
+    <router-link to="/register">Register</router-link>
   </form>
 </template>
 

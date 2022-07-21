@@ -2,12 +2,16 @@ package io.github.kji6252.springvue.controller;
 
 import io.github.kji6252.springvue.controller.vm.UserInfoVM;
 import io.github.kji6252.springvue.mapper.UserMapper;
+import io.github.kji6252.springvue.service.UserServiceImpl;
+import io.github.kji6252.springvue.service.dto.UserAndPasswordDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountController {
 
     private final UserDetailsManager userDetailsManager;
+    private final UserServiceImpl userService;
 
     @GetMapping("/account")
     public UserInfoVM getAccount(HttpServletRequest request) {
@@ -24,6 +29,12 @@ public class AccountController {
 
         return UserMapper.INSTANCE
                 .userToVM(userDetailsManager.loadUserByUsername(request.getRemoteUser()));
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void register(@Valid @RequestBody UserAndPasswordDTO userAndPasswordDTO) {
+        userService.registerUser(userAndPasswordDTO);
     }
 
     private static class AccountControllerException extends RuntimeException {
