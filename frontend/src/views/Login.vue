@@ -19,9 +19,6 @@
 import axios from "axios";
 export default {
   name: "Login",
-  create: () => {
-    console.dir(this.store);
-  },
   methods: {
     doLogin() {
       const data =
@@ -37,7 +34,6 @@ export default {
           },
         })
         .then(() => {
-          console.dir(this.store);
           axios.get("/api/account").then((response) => {
             const account = response.data;
             if (account) {

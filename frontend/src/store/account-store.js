@@ -11,6 +11,10 @@ export const accountStore = {
       state.userIdentity = identity;
       state.authenticated = true;
     },
+    logout(state) {
+      state.userIdentity = null;
+      state.authenticated = false;
+    },
   },
   actions: {
     account: (state) => state.userIdentity,
