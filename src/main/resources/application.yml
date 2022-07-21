@@ -13,8 +13,8 @@ feign:
         loggerLevel: FULL
       kakao:
         defaultRequestHeaders:
-          Authorization: KakaoAK 88891313adc5b9bcec66e2fa170f00d1
+          Authorization:
       naver:
         defaultRequestHeaders:
-          X-Naver-Client-Id: GgmypSOWV9nwhr6Wauzv
-          X-Naver-Client-Secret: mIApBfW5aV
+          X-Naver-Client-Id:
+          X-Naver-Client-Secret:
