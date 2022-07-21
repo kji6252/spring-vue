@@ -46,6 +46,7 @@ public class WebSecurityConfig {
                 .and()
                     .authorizeRequests(authorize -> authorize
                         .mvcMatchers("/api/register").permitAll()
+                        .mvcMatchers("/api/search").permitAll()
                         .mvcMatchers("/api/**").authenticated()
                     );
         return http.build();
