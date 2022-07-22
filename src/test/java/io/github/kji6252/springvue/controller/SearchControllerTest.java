@@ -20,21 +20,54 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 class SearchControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void testExceptionRegisterUser() throws Exception {
+    void testSearch() throws Exception {
         mockMvc
                 .perform(get("/api/search")
-                                 .accept(MediaType.APPLICATION_JSON).param("query", "나이키"))
+                                 .param("query", "나이키")
+                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.size()").value("10"))
+                .andExpect(jsonPath("$.number").value("1"))
+                .andExpect(jsonPath("$.size").value("10"));
+    }
+
+    @Test
+    void testExceptionValidationNotBlankSearch() throws Exception {
+        mockMvc
+                .perform(get("/api/search")
+                                 .param("query", "")
+                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.status").value("400"))
-                .andExpect(jsonPath("$.violations[0].field").value("password"))
-                .andExpect(jsonPath("$.violations[0].message").value("size must be between 4 and 50"))
-                .andExpect(jsonPath("$.violations[1].field").value("username"))
-                .andExpect(jsonPath("$.violations[1].message").value("size must be between 1 and 50"));
+                .andExpect(jsonPath("$.violations[0].field").value("getBlogs.query"))
+                .andExpect(jsonPath("$.violations[0].message").value("must not be blank"));
+    }
+
+    @Test
+    void testExceptionValidationMinPageSearch() throws Exception {
+        mockMvc
+                .perform(get("/api/search")
+                                 .param("query", "나이키")
+                                 .param("page", "0")
+                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].field").value("getBlogs.page"))
+                .andExpect(jsonPath("$.violations[0].message").value("must be greater than or equal to 1"));
+    }
+
+    @Test
+    void testExceptionValidationMaxPageSearch() throws Exception {
+        mockMvc
+                .perform(get("/api/search")
+                                 .param("query", "나이키")
+                                 .param("page", "51")
+                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].field").value("getBlogs.page"))
+                .andExpect(jsonPath("$.violations[0].message").value("must be less than or equal to 50"));
     }
 
 }

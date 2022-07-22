@@ -2,7 +2,7 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: false
 
-logging.level.io.github.kji6252.springvue.remote.KakaoClient: DEBUG
+logging.level.io.github.kji6252.springvue.remote: DEBUG
 feign:
   circuitbreaker:
     enabled: true

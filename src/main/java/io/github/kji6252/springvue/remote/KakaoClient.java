@@ -1,7 +1,9 @@
 package io.github.kji6252.springvue.remote;
 
+import feign.FeignException;
 import io.github.kji6252.springvue.mapper.BlogMapper;
-import io.github.kji6252.springvue.service.dto.KakaoBlogResultDTO;
+import io.github.kji6252.springvue.remote.dto.KakaoBlogResultDTO;
+import io.github.kji6252.springvue.remote.dto.NaverBlogResultDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface KakaoClient {
 
     @GetMapping(path="/v2/search/blog")
-    KakaoBlogResultDTO getBlogResult(@RequestParam String query);
+    KakaoBlogResultDTO getBlogResult(@RequestParam String query,
+                                     @RequestParam int page,
+                                     @RequestParam int size);
 
     @RequiredArgsConstructor
     @Slf4j
@@ -27,9 +31,14 @@ public interface KakaoClient {
         public KakaoClient create(Throwable cause) {
             return new KakaoClient() {
                 @Override
-                public KakaoBlogResultDTO getBlogResult(String query) {
-                    log.warn("Fallback KakaoClient.getBlogResult() called with: query = [" + query + "]", cause);
-                    return BlogMapper.INSTANCE.naverToKakao(naverClient.getBlogResult(query));
+                public KakaoBlogResultDTO getBlogResult(String query, int page, int size) {
+                    log.warn("Fallback KakaoClient.getBlogResult() called with: query = [" + query + "] page = [" + page + "] size = [" + size + "]", cause);
+                    NaverBlogResultDTO blogResult = naverClient.getBlogResult(query, page, size);
+                    return BlogMapper.INSTANCE.naverToKakao(blogResult);
+                }
+
+                private FeignException.BadRequest getBadRequest() {
+                    return cause instanceof FeignException.BadRequest ? ((FeignException.BadRequest) cause) : null;
                 }
             };
         }

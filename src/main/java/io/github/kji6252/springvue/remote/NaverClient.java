@@ -1,7 +1,6 @@
 package io.github.kji6252.springvue.remote;
 
-import io.github.kji6252.springvue.service.dto.NaverBlogResultDTO;
-import lombok.RequiredArgsConstructor;
+import io.github.kji6252.springvue.remote.dto.NaverBlogResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NaverClient {
 
     @GetMapping(path="/v1/search/blog")
-    NaverBlogResultDTO getBlogResult(@RequestParam String query);
+    NaverBlogResultDTO getBlogResult(@RequestParam String query,
+                                     @RequestParam int start,
+                                     @RequestParam int display);
 
     @Slf4j
     @Component
@@ -23,8 +24,8 @@ public interface NaverClient {
         public NaverClient create(Throwable cause) {
             return new NaverClient() {
                 @Override
-                public NaverBlogResultDTO getBlogResult(String query) {
-                    log.warn("Fallback NaverClient.getBlogResult() called with: query = [" + query + "]", cause);
+                public NaverBlogResultDTO getBlogResult(String query, int start, int display) {
+                    log.warn("Fallback NaverClient.getBlogResult() called with: query = [" + query + "] start = [" + start + "] display = [" + display + "]", cause);
                     return null;
                 }
             };
