@@ -2,8 +2,8 @@ package io.github.kji6252.springvue.service;
 
 import io.github.kji6252.springvue.mapper.BlogMapper;
 import io.github.kji6252.springvue.remote.KakaoClient;
-import io.github.kji6252.springvue.service.dto.Blog;
 import io.github.kji6252.springvue.remote.dto.KakaoBlogResultDTO;
+import io.github.kji6252.springvue.service.dto.Blog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,9 +15,13 @@ import org.springframework.stereotype.Service;
 public class BlogServiceImpl implements BlogService {
 
     private final KakaoClient kakaoClient;
+    private final HotKeywordService hotKeywordService;
 
     @Override
     public Page<Blog> getBlogResult(String query, Pageable pageable) {
+        if (pageable.getPageNumber() == 1) {
+            hotKeywordService.queryCount(query);
+        }
         KakaoBlogResultDTO blogResult = kakaoClient.getBlogResult(query,
                                                                   pageable.getPageNumber(),
                                                                   pageable.getPageSize());

@@ -1,6 +1,21 @@
 spring:
   mvc:
     throw-exception-if-no-handler-found: false
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    generate-ddl: true
+  h2:
+    console:
+      enabled: true
 
 logging.level.io.github.kji6252.springvue.remote: DEBUG
 feign:
@@ -13,8 +28,8 @@ feign:
         loggerLevel: FULL
       kakao:
         defaultRequestHeaders:
-          Authorization:
+          Authorization: KakaoAK dc3e103ddc232c97b085faf8ba106db3
       naver:
         defaultRequestHeaders:
-          X-Naver-Client-Id:
-          X-Naver-Client-Secret:
+          X-Naver-Client-Id: ifxzPO_LDSLsCvXXMCyr
+          X-Naver-Client-Secret: PQyCYfJCIi

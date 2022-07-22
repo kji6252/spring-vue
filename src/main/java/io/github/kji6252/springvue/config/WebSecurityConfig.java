@@ -28,10 +28,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .exceptionHandling()
-                    .authenticationEntryPoint(problemSupport)
-                    .accessDeniedHandler(problemSupport)
+                    .headers().frameOptions().sameOrigin()
+                .and()
+                    .csrf().disable()
+                    .exceptionHandling()
+                        .authenticationEntryPoint(problemSupport)
+                        .accessDeniedHandler(problemSupport)
                 .and()
                     .formLogin()
                         .loginProcessingUrl("/api/authentication")
@@ -47,6 +49,8 @@ public class WebSecurityConfig {
                     .authorizeRequests(authorize -> authorize
                         .mvcMatchers("/api/register").permitAll()
                         .mvcMatchers("/api/search").permitAll()
+                        .mvcMatchers("/api/hot-keywords").permitAll()
+                        .mvcMatchers("/h2-console/**").permitAll()
                         .mvcMatchers("/api/**").authenticated()
                     );
         return http.build();

@@ -70,4 +70,23 @@ class SearchControllerTest {
                 .andExpect(jsonPath("$.violations[0].message").value("must be less than or equal to 50"));
     }
 
+    @Test
+    void testHotKeywords() throws Exception {
+        mockMvc
+                .perform(get("/api/search")
+                                 .param("query", "나이키")
+                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.size()").value("10"))
+                .andExpect(jsonPath("$.number").value("1"))
+                .andExpect(jsonPath("$.size").value("10"));
+
+        mockMvc
+                .perform(get("/api/hot-keywords")
+                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].keyword").value("나이키"))
+                .andExpect(jsonPath("$[0].searchCount").value("1"));
+    }
+
 }
