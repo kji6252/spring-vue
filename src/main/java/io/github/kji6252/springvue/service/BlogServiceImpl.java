@@ -5,6 +5,7 @@ import io.github.kji6252.springvue.remote.KakaoClient;
 import io.github.kji6252.springvue.remote.dto.KakaoBlogResultDTO;
 import io.github.kji6252.springvue.service.dto.Blog;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ public class BlogServiceImpl implements BlogService {
     private final KakaoClient kakaoClient;
     private final HotKeywordService hotKeywordService;
 
+    @Cacheable(value = "queryBlogsFirstPage", key = "#query", condition = "#pageable.pageNumber == 1", sync = true)
     @Override
     public Page<Blog> getBlogResult(String query, Pageable pageable) {
         if (pageable.getPageNumber() == 1) {

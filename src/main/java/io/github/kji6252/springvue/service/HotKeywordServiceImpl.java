@@ -3,6 +3,7 @@ package io.github.kji6252.springvue.service;
 import io.github.kji6252.springvue.domain.HotKeyword;
 import io.github.kji6252.springvue.repository.HotKeywordRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class HotKeywordServiceImpl implements HotKeywordService {
         hotKeywordRepository.save(hotKeyword);
     }
 
+    @Cacheable(value = "top10HotKeywords", sync = true)
     @Transactional(readOnly = true)
     @Override
     public List<HotKeyword> getTop10HotKeyword() {
