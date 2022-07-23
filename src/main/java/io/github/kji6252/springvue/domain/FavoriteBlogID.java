@@ -13,6 +13,6 @@ import java.io.Serializable;
 @Embeddable
 public class FavoriteBlogID implements Serializable {
 
-    private String username;
+    private String userName;
     private int blogHashCode;
 }

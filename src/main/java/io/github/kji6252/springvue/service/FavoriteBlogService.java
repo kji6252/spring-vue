@@ -10,5 +10,5 @@ public interface FavoriteBlogService {
 
     void removeFavoriteBlog(String userName, int blogHashCode);
 
-    Page<FavoriteBlog> getFavoriteBlogs(Pageable pageable);
+    Page<FavoriteBlog> getFavoriteBlogs(Pageable pageable, String userName);
 }

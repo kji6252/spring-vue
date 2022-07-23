@@ -44,8 +44,8 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
     }
 
     @Override
-    public Page<FavoriteBlog> getFavoriteBlogs(Pageable pageable) {
-        return favoriteBlogRepository.findAll(pageable);
+    public Page<FavoriteBlog> getFavoriteBlogs(Pageable pageable, String userName) {
+        return favoriteBlogRepository.findAllByUserName(pageable, userName);
     }
 
     static class FavoriteBlogServiceException extends AbstractThrowableProblem {

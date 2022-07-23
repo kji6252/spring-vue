@@ -34,8 +34,8 @@ public class UserBlogController {
     }
 
     @GetMapping("/favorite-blogs")
-    public Page<FavoriteBlogVM> getFavoriteBlogs(@PageableDefault Pageable pageable) {
-        Page<FavoriteBlog> favoriteBlogs = favoriteBlogService.getFavoriteBlogs(pageable);
+    public Page<FavoriteBlogVM> getFavoriteBlogs(@PageableDefault Pageable pageable, Authentication authentication) {
+        Page<FavoriteBlog> favoriteBlogs = favoriteBlogService.getFavoriteBlogs(pageable, authentication.getName());
 
         return new PageImpl<>(BlogMapper.INSTANCE.entityToVM(favoriteBlogs.getContent()),
                               favoriteBlogs.getPageable(),

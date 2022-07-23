@@ -2,6 +2,10 @@ package io.github.kji6252.springvue.controller;
 
 import io.github.kji6252.springvue.IntegrationTest;
 import io.github.kji6252.springvue.TestUtil;
+import io.github.kji6252.springvue.domain.FavoriteBlog;
+import io.github.kji6252.springvue.domain.FavoriteBlogID;
+import io.github.kji6252.springvue.mapper.BlogMapper;
+import io.github.kji6252.springvue.repository.FavoriteBlogRepository;
 import io.github.kji6252.springvue.service.dto.BlogDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,6 +29,9 @@ class UserBlogControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private FavoriteBlogRepository favoriteBlogRepository;
 
     @Transactional
     @Test
@@ -103,4 +111,25 @@ class UserBlogControllerTest {
                 .andExpect(jsonPath("$.content[0].blogName").value("블로그이름"))
                 .andExpect(jsonPath("$.content[0].createdDate").value(LocalDate.of(2022,7,23).toString()));
     }
+
+    /**
+     * currentLoginUser == "user"
+     * @throws Exception
+     */
+    @Transactional
+    @Test
+    void testDiffUserGetFavoriteBlogs() throws Exception {
+        BlogDTO blogDTO = new BlogDTO("타이틀4", "디스크립션", "url", "블로그이름", LocalDate.of(2022,7,23));
+        FavoriteBlog favoriteBlog = FavoriteBlog.of(FavoriteBlogID.of("test", blogDTO.hashCode()),
+                                            BlogMapper.INSTANCE.dtoToDomain(blogDTO),
+                                            LocalDateTime.now());
+        favoriteBlogRepository.saveAndFlush(favoriteBlog);
+
+        mockMvc
+                .perform(get("/api/favorite-blogs")
+                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.size()").value(0));
+    }
+
 }
