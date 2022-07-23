@@ -6,6 +6,7 @@
       <span><hot-keyword /></span>
     </div>
 
+    <h2>블로그 검색 결과</h2>
     <blog-list
       :blogs="blogs"
       button-text="블로그 즐겨찾기 추가"
