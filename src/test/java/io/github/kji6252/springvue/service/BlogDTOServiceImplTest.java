@@ -1,7 +1,7 @@
 package io.github.kji6252.springvue.service;
 
 import io.github.kji6252.springvue.remote.KakaoClient;
-import io.github.kji6252.springvue.service.dto.Blog;
+import io.github.kji6252.springvue.service.dto.BlogDTO;
 import io.github.kji6252.springvue.remote.dto.KakaoBlogResultDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @MockitoSettings
-class BlogServiceImplTest {
+class BlogDTOServiceImplTest {
 
     @InjectMocks
     private BlogServiceImpl blogService;
@@ -38,7 +38,7 @@ class BlogServiceImplTest {
         KakaoBlogResultDTO value = new KakaoBlogResultDTO(new KakaoBlogResultDTO.Meta(5, false), Arrays.asList(document, document2, document3, document4, document5));
         given(kakaoClient.getBlogResult(anyString(), anyInt(), anyInt())).willReturn(value);
         // when
-        Page<Blog> blogs = blogService.getBlogResult("나이키", PageRequest.of(1, 2));
+        Page<BlogDTO> blogs = blogService.getBlogResult("나이키", PageRequest.of(1, 2));
         // then
         assertEquals(1, blogs.getNumber());
         assertEquals(2, blogs.getSize());

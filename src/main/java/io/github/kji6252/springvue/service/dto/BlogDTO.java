@@ -5,7 +5,7 @@ import lombok.Value;
 import java.time.LocalDate;
 
 @Value
-public class Blog {
+public class BlogDTO {
     String title;
     String description;
     String url;

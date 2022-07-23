@@ -3,7 +3,7 @@ package io.github.kji6252.springvue.service;
 import io.github.kji6252.springvue.mapper.BlogMapper;
 import io.github.kji6252.springvue.remote.KakaoClient;
 import io.github.kji6252.springvue.remote.dto.KakaoBlogResultDTO;
-import io.github.kji6252.springvue.service.dto.Blog;
+import io.github.kji6252.springvue.service.dto.BlogDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Cacheable(value = "queryBlogsFirstPage", key = "#query", condition = "#pageable.pageNumber == 1", sync = true)
     @Override
-    public Page<Blog> getBlogResult(String query, Pageable pageable) {
+    public Page<BlogDTO> getBlogResult(String query, Pageable pageable) {
         if (pageable.getPageNumber() == 1) {
             hotKeywordService.queryCount(query);
         }

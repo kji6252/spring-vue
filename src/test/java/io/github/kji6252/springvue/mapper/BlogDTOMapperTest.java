@@ -2,18 +2,17 @@ package io.github.kji6252.springvue.mapper;
 
 import io.github.kji6252.springvue.remote.dto.KakaoBlogResultDTO;
 import io.github.kji6252.springvue.remote.dto.NaverBlogResultDTO;
-import io.github.kji6252.springvue.service.dto.Blog;
+import io.github.kji6252.springvue.service.dto.BlogDTO;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BlogMapperTest {
+class BlogDTOMapperTest {
 
     @Test
     void testNaverToKakao() {
@@ -36,13 +35,13 @@ class BlogMapperTest {
         // given
         KakaoBlogResultDTO.Document document = new KakaoBlogResultDTO.Document("타이틀", "컨텐츠", "URL", "블로그이름", "썸네일", ZonedDateTime.now());
         // when
-        Blog blog = BlogMapper.INSTANCE.documentToBlog(document);
+        BlogDTO blogDTO = BlogMapper.INSTANCE.documentToBlog(document);
         // then
-        assertEquals("타이틀", blog.getTitle());
-        assertEquals("컨텐츠", blog.getDescription());
-        assertEquals("URL", blog.getUrl());
-        assertEquals("블로그이름", blog.getBlogName());
-        assertEquals(LocalDate.now(), blog.getCreatedDate());
+        assertEquals("타이틀", blogDTO.getTitle());
+        assertEquals("컨텐츠", blogDTO.getDescription());
+        assertEquals("URL", blogDTO.getUrl());
+        assertEquals("블로그이름", blogDTO.getBlogName());
+        assertEquals(LocalDate.now(), blogDTO.getCreatedDate());
     }
 
     @Test
@@ -51,11 +50,11 @@ class BlogMapperTest {
         KakaoBlogResultDTO.Document document = new KakaoBlogResultDTO.Document("타이틀", "컨텐츠", "URL", "블로그이름", "썸네일", ZonedDateTime.now());
         KakaoBlogResultDTO.Document document2 = new KakaoBlogResultDTO.Document("타이틀2", "컨텐츠2", "URL2", "블로그이름2", "썸네일2", ZonedDateTime.now());
         // when
-        List<Blog> blogs = BlogMapper.INSTANCE.documentToBlog(Arrays.asList(document, document2));
+        List<BlogDTO> blogDTOS = BlogMapper.INSTANCE.documentToBlog(Arrays.asList(document, document2));
         // then
-        assertEquals(2, blogs.size());
-        assertEquals("타이틀", blogs.get(0).getTitle());
-        assertEquals("타이틀2", blogs.get(1).getTitle());
+        assertEquals(2, blogDTOS.size());
+        assertEquals("타이틀", blogDTOS.get(0).getTitle());
+        assertEquals("타이틀2", blogDTOS.get(1).getTitle());
     }
 
 }

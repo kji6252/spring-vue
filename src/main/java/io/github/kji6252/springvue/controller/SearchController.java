@@ -3,7 +3,7 @@ package io.github.kji6252.springvue.controller;
 import io.github.kji6252.springvue.domain.HotKeyword;
 import io.github.kji6252.springvue.service.BlogService;
 import io.github.kji6252.springvue.service.HotKeywordService;
-import io.github.kji6252.springvue.service.dto.Blog;
+import io.github.kji6252.springvue.service.dto.BlogDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +29,9 @@ public class SearchController {
     private final HotKeywordService hotKeywordService;
 
     @GetMapping("/search")
-    public Page<Blog> getBlogs(@RequestParam @NotBlank String query,
-                               @PageableDefault(page = 1) Pageable pageable,
-                               @RequestParam(defaultValue = "1") @Min(1) @Max(50) int page) {
+    public Page<BlogDTO> getBlogs(@RequestParam @NotBlank String query,
+                                  @PageableDefault(page = 1) Pageable pageable,
+                                  @RequestParam(defaultValue = "1") @Min(1) @Max(50) int page) {
         return blogService.getBlogResult(query, pageable);
     }
 

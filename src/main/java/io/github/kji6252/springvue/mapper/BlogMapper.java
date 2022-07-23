@@ -1,10 +1,10 @@
 package io.github.kji6252.springvue.mapper;
 
+import io.github.kji6252.springvue.domain.Blog;
 import io.github.kji6252.springvue.remote.dto.*;
-import io.github.kji6252.springvue.service.dto.Blog;
+import io.github.kji6252.springvue.service.dto.BlogDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
@@ -30,9 +30,11 @@ public interface BlogMapper {
 
     @Mapping(source = "contents", target = "description")
     @Mapping(source = "datetime", target = "createdDate")
-    Blog documentToBlog(KakaoBlogResultDTO.Document document);
+    BlogDTO documentToBlog(KakaoBlogResultDTO.Document document);
 
-    List<Blog> documentToBlog(Collection<KakaoBlogResultDTO.Document> document);
+    List<BlogDTO> documentToBlog(Collection<KakaoBlogResultDTO.Document> document);
 
 
+    @Mapping(source = "blogName", target = "name")
+    Blog dtoToDomain(BlogDTO blogDTO);
 }
