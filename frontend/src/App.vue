@@ -13,10 +13,41 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
+  created() {
+    this.fetchAccount();
+    this.fetchHotKeywords();
+    this.intervalFetchData();
+  },
   computed: {
     authenticated() {
       return this.$store.state.accountStore.authenticated;
+    },
+  },
+  methods: {
+    fetchHotKeywords() {
+      axios
+        .get("/api/hot-keywords")
+        .then((response) =>
+          this.$store.commit("searchStore/hotKeywords", response.data)
+        );
+    },
+    intervalFetchData() {
+      setInterval(() => {
+        this.fetchHotKeywords();
+      }, 10000);
+    },
+    fetchAccount() {
+      axios.get("/api/account").then((response) => {
+        const account = response.data;
+        if (account) {
+          this.$store.commit("accountStore/authenticated", account);
+          this.$router.push("/");
+        } else {
+          axios.post("/api/logout");
+        }
+      });
     },
   },
 };

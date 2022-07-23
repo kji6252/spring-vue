@@ -12,29 +12,11 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   name: "HotKeyword",
-  data() {
-    return {
-      hotKeywords: [],
-    };
-  },
-  created() {
-    this.fetchHotKeywords();
-    this.intervalFetchData();
-  },
-  methods: {
-    fetchHotKeywords() {
-      axios
-        .get("/api/hot-keywords")
-        .then((response) => (this.hotKeywords = response.data));
-    },
-    intervalFetchData() {
-      setInterval(() => {
-        this.fetchHotKeywords();
-      }, 10000);
-    },
+  computed: {
+    ...mapGetters("searchStore", ["hotKeywords"]),
   },
 };
 </script>
