@@ -6,10 +6,10 @@ import io.github.kji6252.springvue.service.UserService;
 import io.github.kji6252.springvue.service.dto.UserAndPasswordDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -20,13 +20,13 @@ public class AccountController {
     private final UserService userService;
 
     @GetMapping("/account")
-    public UserInfoVM getAccount(HttpServletRequest request) {
-        if (StringUtils.isEmpty(request.getRemoteUser())) {
+    public UserInfoVM getAccount(Authentication authentication) {
+        if (StringUtils.isEmpty(authentication.getName())) {
             throw new AccountControllerException("User could not be found");
         }
 
         return UserMapper.INSTANCE
-                .userToVM(userService.loadUserByUsername(request.getRemoteUser()));
+                .userToVM(userService.loadUserByUsername(authentication.getName()));
     }
 
     @PostMapping("/register")
