@@ -6,16 +6,23 @@
       <span><hot-keyword /></span>
     </div>
 
-    <blog-list :blogs="blogs" />
+    <blog-list
+      :blogs="blogs"
+      button-text="블로그 즐겨찾기 추가"
+      :button-event="addBlog"
+    />
     <page-navigator
-      :query="query"
+      v-if="blogs.length > 0"
       :current-page="currentPage"
+      :start-page="1"
       :total-pages="totalPages"
+      :page-forward-event="doSearch"
     />
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
 import SearchForm from "@/components/SearchForm";
 import BlogList from "@/components/BlogList";
@@ -31,6 +38,27 @@ export default {
       "currentPage",
       "totalPages",
     ]),
+  },
+  methods: {
+    addBlog(blog) {
+      axios
+        .post("/api/favorite-blogs", blog)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.error(err));
+    },
+    doSearch(pageNumber) {
+      const query = encodeURIComponent(this.query);
+      axios
+        .get("/api/search?query=" + query + "&page=" + pageNumber)
+        .then((response) => {
+          this.$store.commit("searchStore/pageBlogs", response.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
   },
 };
 </script>

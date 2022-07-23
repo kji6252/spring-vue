@@ -2,7 +2,10 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
+      <router-link v-if="authenticated" to="/favorite-blogs"
+        >Favorite Blog</router-link
+      >
+      |
       <router-link v-if="authenticated" to="/logout">Logout</router-link>
       <router-link v-else to="/login">Login</router-link>
     </nav>

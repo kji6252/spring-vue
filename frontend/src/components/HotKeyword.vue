@@ -20,6 +20,10 @@ export default {
       hotKeywords: [],
     };
   },
+  created() {
+    this.fetchHotKeywords();
+    this.intervalFetchData();
+  },
   methods: {
     fetchHotKeywords() {
       axios
@@ -29,12 +33,8 @@ export default {
     intervalFetchData() {
       setInterval(() => {
         this.fetchHotKeywords();
-      }, 1000);
+      }, 10000);
     },
-  },
-  mounted() {
-    this.fetchHotKeywords();
-    this.intervalFetchData();
   },
 };
 </script>

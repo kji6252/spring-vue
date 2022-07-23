@@ -1,6 +1,8 @@
 package io.github.kji6252.springvue.mapper;
 
+import io.github.kji6252.springvue.controller.vm.FavoriteBlogVM;
 import io.github.kji6252.springvue.domain.Blog;
+import io.github.kji6252.springvue.domain.FavoriteBlog;
 import io.github.kji6252.springvue.remote.dto.*;
 import io.github.kji6252.springvue.service.dto.BlogDTO;
 import org.mapstruct.Mapper;
@@ -34,7 +36,14 @@ public interface BlogMapper {
 
     List<BlogDTO> documentToBlog(Collection<KakaoBlogResultDTO.Document> document);
 
-
-    @Mapping(source = "blogName", target = "name")
     Blog dtoToDomain(BlogDTO blogDTO);
+
+    @Mapping(source = "favoriteBlogID.blogHashCode", target = "blogHashCode")
+    @Mapping(source = "blog.title", target = "title")
+    @Mapping(source = "blog.description", target = "description")
+    @Mapping(source = "blog.url", target = "url")
+    @Mapping(source = "blog.blogName", target = "blogName")
+    @Mapping(source = "blog.createdDate", target = "createdDate")
+    FavoriteBlogVM entityToVM(FavoriteBlog favoriteBlog);
+    List<FavoriteBlogVM> entityToVM(List<FavoriteBlog> favoriteBlogs);
 }

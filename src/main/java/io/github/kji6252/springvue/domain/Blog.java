@@ -7,12 +7,12 @@ import javax.persistence.Embeddable;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-@Data(staticConstructor = "of")
+@Data
 @Embeddable
 public class Blog {
     private String title;
     private String description;
     private String url;
-    private String name;
+    private String blogName;
     private LocalDate createdDate;
 }
