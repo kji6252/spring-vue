@@ -17,6 +17,7 @@ public class BlogServiceImpl implements BlogService {
     private final KakaoClient kakaoClient;
     private final HotKeywordService hotKeywordService;
 
+    @Cacheable(value = "queryBlogsFirstPage", key = "#query", condition = "#pageable.pageNumber == 1", sync = true)
     @Override
     public Page<Blog> getBlogResult(String query, Pageable pageable) {
         if (pageable.getPageNumber() == 1) {

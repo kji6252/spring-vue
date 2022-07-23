@@ -6,7 +6,6 @@ spring:
     username: sa
     driverClassName: org.h2.Driver
   jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: false
     show-sql: true
     hibernate:
@@ -41,3 +40,7 @@ management:
     web:
       exposure:
         include: prometheus
+application:
+  caches:
+    queryBlogsFirstPage: maximumSize=1000, expireAfterWrite=60s, recordStats
+    top10HotKeywords: maximumSize=1, expireAfterWrite=10s, recordStats
