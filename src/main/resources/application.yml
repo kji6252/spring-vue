@@ -27,11 +27,11 @@ feign:
         loggerLevel: FULL
       kakao:
         defaultRequestHeaders:
-          Authorization: KakaoAK dc3e103ddc232c97b085faf8ba106db3
+          Authorization:
       naver:
         defaultRequestHeaders:
-          X-Naver-Client-Id: ifxzPO_LDSLsCvXXMCyr
-          X-Naver-Client-Secret: PQyCYfJCIi
+          X-Naver-Client-Id:
+          X-Naver-Client-Secret:
 management:
   endpoint:
     prometheus:
