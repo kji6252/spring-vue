@@ -16,8 +16,7 @@ export const accountStore = {
       state.authenticated = false;
     },
   },
-  actions: {
-    account: (state) => state.userIdentity,
+  getters: {
     authenticated: (state) => state.authenticated,
   },
 };

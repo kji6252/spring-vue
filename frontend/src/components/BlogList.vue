@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "BlogList",
   props: {
@@ -30,7 +30,7 @@ export default {
     buttonEvent: Function,
   },
   computed: {
-    ...mapActions("accountStore", ["authenticated"]),
+    ...mapGetters("accountStore", ["authenticated"]),
   },
 };
 </script>
