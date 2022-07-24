@@ -26,8 +26,6 @@ class BlogServiceImplTest {
 
     @Mock
     private KakaoClient kakaoClient;
-    @Mock
-    private HotKeywordService hotKeywordService;
 
     @Test
     void testBlogResult() {
