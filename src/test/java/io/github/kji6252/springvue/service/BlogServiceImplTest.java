@@ -19,13 +19,15 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @MockitoSettings
-class BlogDTOServiceImplTest {
+class BlogServiceImplTest {
 
     @InjectMocks
     private BlogServiceImpl blogService;
 
     @Mock
     private KakaoClient kakaoClient;
+    @Mock
+    private HotKeywordService hotKeywordService;
 
     @Test
     void testBlogResult() {
