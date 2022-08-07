@@ -35,7 +35,7 @@ public class HotKeywordServiceImpl implements HotKeywordService {
         hotKeywordRepository.save(hotKeyword);
     }
 
-//    @Cacheable(value = "top10HotKeywords", sync = true)
+    @Cacheable(value = "top10HotKeywords", sync = true)
     @Transactional(readOnly = true)
     @Override
     public List<HotKeyword> getTop10HotKeyword() {

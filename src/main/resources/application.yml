@@ -23,7 +23,6 @@ feign:
   client:
     config:
       default:
-        readTimeout: 3000
         loggerLevel: FULL
       kakao:
         defaultRequestHeaders:
@@ -32,6 +31,19 @@ feign:
         defaultRequestHeaders:
           X-Naver-Client-Id:
           X-Naver-Client-Secret:
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 100
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        registerHealthIndicator: true
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+
 management:
   endpoint:
     prometheus:
@@ -39,7 +51,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        include: "*"
 application:
   caches:
     queryBlogsFirstPage: maximumSize=1000, expireAfterWrite=60s, recordStats
