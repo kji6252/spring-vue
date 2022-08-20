@@ -18,6 +18,3 @@
 2. [axios](https://axios-http.com/kr/docs/intro) - HttpClient
 3. [Vue vuelidate](https://github.com/vuelidate/vuelidate) - Vue 에서 회원 가입시 벨리데이션 체크
 
-# 링크
-* [구글 드라이브 링크](https://drive.google.com/file/d/1eQiCtmahb3y6SRzcuvN4N2Vc-oVpq_7O/view?usp=drivesdk)
-* [Executable jar](spring-vue-0.0.1-SNAPSHOT.jar)
